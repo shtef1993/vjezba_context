@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Komp1 from './komponente/komp1';
+import Komp2 from './komponente/komp2';
 
-function App() {
+export const MyContext = createContext();
+
+const App = () => {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  const themeClassName = theme === 'light' ? 'bg-light' : 'bg-dark text-white';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MyContext.Provider value={{ text: 'Pozdrav ekipa!', number: 93 }}>
+      <div className={themeClassName}>
+        <Button onClick={toggleTheme} variant="info" className="m-2">
+          Toggle Theme
+        </Button>
+        <Komp1 />
+        <Komp2 />
+      </div>
+    </MyContext.Provider>
   );
-}
+};
 
 export default App;
